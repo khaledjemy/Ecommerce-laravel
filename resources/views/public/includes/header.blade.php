@@ -24,7 +24,7 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('index') }}#explore">Explore</a></li>
-                        <li><a href="{{ route('cart.index') }}">Cart</a></li>
+                        @unless (config('demo.enabled')) <li><a href="{{ route('cart.index') }}">Cart</a></li> @endunless
                     </ul>        
                     <a class='menu-trigger'>
                         <span>Menu</span>

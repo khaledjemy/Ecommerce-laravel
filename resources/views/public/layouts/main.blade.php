@@ -4,6 +4,11 @@
   @include('public.includes.head')
     
     <body>
+    @if (config('demo.enabled'))
+        <div role="status" style="background:#fff3cd;color:#5f4300;text-align:center;padding:10px;position:relative;z-index:10000">
+            Demo preview — sample products only. Ordering, messages and account changes are disabled.
+        </div>
+    @endif
     
     <!-- ***** Preloader Start ***** -->
     @include('public.includes.preloader')

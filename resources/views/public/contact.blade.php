@@ -12,6 +12,7 @@
         <div class="col-lg-6">
             @if (session('status')) <div class="alert alert-success" role="status">{{ session('status') }}</div> @endif
             @if ($errors->any()) <div class="alert alert-danger" role="alert">{{ $errors->first() }}</div> @endif
+            @unless (config('demo.enabled'))
             <form id="contact" action="{{ route('store') }}" method="post">
                 @csrf
                 <div class="form-group"><label for="contact-name">Name</label><input class="form-control" id="contact-name" name="name" value="{{ old('name') }}" required></div>
@@ -19,6 +20,7 @@
                 <div class="form-group"><label for="contact-message">Message</label><textarea class="form-control" id="contact-message" name="message" rows="6" required>{{ old('message') }}</textarea></div>
                 <button type="submit" class="btn btn-dark">Send message</button>
             </form>
+            @else <p>This read-only preview does not accept messages.</p> @endunless
         </div>
     </div></div>
 </section>

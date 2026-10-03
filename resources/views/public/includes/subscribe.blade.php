@@ -6,6 +6,7 @@
                     <h2>Get product updates</h2>
                     <span>Subscribe to hear about new arrivals.</span>
                 </div>
+                @unless (config('demo.enabled'))
                 <form id="subscribe" action="{{ route('send') }}" method="post">
                     @csrf
                     <div class="row">
@@ -26,6 +27,9 @@
                       </div>
                     </div>
                 </form>
+                @else
+                    <p>Subscriptions are disabled in this demo.</p>
+                @endunless
             </div>
         </div>
     </div>

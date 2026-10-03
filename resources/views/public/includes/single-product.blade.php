@@ -19,7 +19,7 @@
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                 </ul>
-                <span>Explore this product and add it to your cart when you are ready.</span>
+                <span>{{ config('demo.enabled') ? 'This is a sample product in a read-only preview.' : 'Explore this product and add it to your cart when you are ready.' }}</span>
                 <div class="quote">
                     <i class="fa fa-quote-left"></i><p>Product availability and pricing are shown above.</p>
                 </div>
@@ -27,6 +27,7 @@
 
                     <h4>Price: {{ $currency }} {{ number_format($product->price, 2) }}</h4>
                     
+                    @unless (config('demo.enabled'))
                     <div class="main-border-button">
                         <form action="{{ route('cart.add') }}" method="POST">
                             @csrf
@@ -37,6 +38,7 @@
                         </form>
                         
                     </div>
+                    @endunless
                 </div>
             </div>
         </div>

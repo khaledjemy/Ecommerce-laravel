@@ -7,7 +7,7 @@
             </div>
             <div class="col-lg-4"><h4>Shop</h4><ul>
                 <li><a href="{{ route('products') }}">All products</a></li>
-                <li><a href="{{ route('cart.index') }}">Cart</a></li>
+                @unless (config('demo.enabled')) <li><a href="{{ route('cart.index') }}">Cart</a></li> @endunless
             </ul></div>
             <div class="col-lg-4"><h4>Information</h4><ul>
                 <li><a href="{{ route('index') }}">Home</a></li>

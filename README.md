@@ -45,3 +45,9 @@ The sample catalog is synthetic. Do not run the seeder against a buyer's live ca
 Card payments, wallets, automatic bank-transfer verification, shipping carriers, tax calculation, shipping rates and refunds are **not** integrated. Order placed/updated emails are queued but require working mail and queue infrastructure. The stock value is decremented at order placement, not reserved temporarily in the cart. Country-specific integrations must be implemented for the buyer's provider and business rules. Do not enable a payment method in the UI without a working server-side integration and verified webhook/callback. The public-facing template still needs buyer-specific branding and legal pages before production use.
 
 Run the automated checks with `php artisan test`.
+
+## Local read-only demo
+
+On Windows, after local setup, run `./scripts/start-demo.ps1` from the project directory. It creates an isolated ignored SQLite database in `.demo/`, migrates it, seeds synthetic sample products, and serves the preview at `http://127.0.0.1:8011`. It does not use the configured MySQL database or change `.env`. Do not use this script on a live server.
+
+For a public demo, deploy to a separate host and separate database with `DEMO_MODE=true`, `APP_DEBUG=false`, and no production credentials. The global demo guard rejects all non-GET requests, including login, registration, contact and checkout; storefront forms for those actions are hidden. The demo is for browsing only and does not represent a real payment or an order. Do not share or reuse a buyer's production database for it.
