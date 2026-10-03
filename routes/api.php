@@ -17,10 +17,10 @@ Route::group([
     'controller'=>ProductController::class,
 ],function(){
 Route::get('products', 'index');
-Route::post('products', 'store');
+Route::post('products', 'store')->middleware(['auth:sanctum', 'can:manage-catalog']);
 Route::get('products/{id}', 'show');
-Route::post('products/{id}','update');
-Route::delete('products/{id}', 'destroy');
+Route::post('products/{id}','update')->middleware(['auth:sanctum', 'can:manage-catalog']);
+Route::delete('products/{id}', 'destroy')->middleware(['auth:sanctum', 'can:manage-catalog']);
  });
 
 //categories
@@ -28,10 +28,10 @@ Route::group([
     'controller'=>CategoryController::class,
 ],function(){
 Route::get('categories', 'index');
-Route::post('categories', 'store');
+Route::post('categories', 'store')->middleware(['auth:sanctum', 'can:manage-catalog']);
 Route::get('categories/{id}', 'show');
-Route::post('categories/{id}','update');
-Route::delete('categories/{id}', 'destroy');
+Route::post('categories/{id}','update')->middleware(['auth:sanctum', 'can:manage-catalog']);
+Route::delete('categories/{id}', 'destroy')->middleware(['auth:sanctum', 'can:manage-catalog']);
  });
 
 
@@ -49,5 +49,5 @@ Route::group([
     Route::get('userprofile',[AuthController::class,'userprofile']);
     Route::get('logout',[AuthController::class,'logout']);
     Route::get('userresource',[AuthController::class,'userResource']);      //get one user by id 
-    Route::get('usercollection',[AuthController::class,'userCollection']);  //get all user by collection
+    Route::get('usercollection',[AuthController::class,'userCollection'])->middleware('can:manage-catalog');
 });

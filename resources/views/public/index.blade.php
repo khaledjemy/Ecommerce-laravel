@@ -21,10 +21,6 @@
     @include('public.includes.explore')
     <!-- ***** Explore Area Ends ***** -->
 
-    <!-- ***** Social Area Starts ***** -->
-    @include('public.includes.social')
-    <!-- ***** Social Area Ends ***** -->
-
     <!-- ***** Subscribe Area Starts ***** -->
     @include('public.includes.subscribe')
 

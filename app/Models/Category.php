@@ -19,4 +19,11 @@ class Category extends Model
     {
        return $this->hasMany(Product::class);
     }
+
+    public function imageUrl(): string
+    {
+        return asset(str_starts_with($this->image, 'assets/')
+            ? $this->image
+            : 'assests/images/'.basename($this->image));
+    }
 }

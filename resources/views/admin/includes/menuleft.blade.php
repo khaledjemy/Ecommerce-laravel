@@ -25,6 +25,9 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                    <li><a href="{{ route('admin.store-settings.edit') }}"><i class="fa fa-cog"></i> Store settings</a></li>
+                    <li><a href="{{ route('admin.orders.index') }}"><i class="fa fa-shopping-bag"></i> Orders</a></li>
+                    <li><a href="{{ route('admin.inbox.index') }}"><i class="fa fa-envelope"></i> Inbox</a></li>
                     <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{route('user.index')}}">Users List</a></li>

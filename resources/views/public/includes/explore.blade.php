@@ -4,14 +4,13 @@
             <div class="col-lg-6">
                 <div class="left-content">
                     <h2>Explore Our Products</h2>
-                    <span>You are allowed to use this HexaShop HTML CSS template. You can feel free to modify or edit this layout. You can convert this template as any kind of ecommerce CMS theme as you wish.</span>
+                    <span>Browse our available products and discover more in the catalog.</span>
                     <div class="quote">
-                        <i class="fa fa-quote-left"></i><p>You are not allowed to redistribute this template ZIP file on any other website.</p>
+                        <i class="fa fa-quote-left"></i><p>Find products that suit your needs.</p>
                     </div>
-                    <p>There are 5 pages included in this HexaShop Template and we are providing it to you for absolutely free of charge at our TemplateMo website. There are web development costs for us.</p>
-                    <p>If this template is beneficial for your website or business, please kindly <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">support us</a> a little via PayPal. Please also tell your friends about our great website. Thank you.</p>
+                    <p>See the full catalog for current products and details.</p>
                     <div class="main-border-button">
-                        <a href="products.html">Discover More</a>
+                        <a href="{{ route('products') }}">Discover More</a>
                     </div>
                 </div>
             </div>
@@ -37,7 +36,7 @@
                         <div class="col-lg-6">
                             <div class="types">
                                 <h4>Different Types</h4>
-                                <span>Over 304 Products</span>
+                                <span>Explore the catalog</span>
                             </div>
                         </div>
                     </div>

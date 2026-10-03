@@ -6,10 +6,10 @@
                 <div class="left-content">
                     <div class="thumb">
                         <div class="inner-content">
-                            <h4>We Are Hexashop</h4>
-                            <span>Awesome, clean &amp; creative HTML5 Template</span>
+                            <h4>{{ \App\Models\StoreSetting::current()->store_name }}</h4>
+                            <span>Explore our latest products.</span>
                             <div class="main-border-button">
-                                <a href="#">Purchase Now!</a>
+                                <a href="{{ route('products') }}">Browse products</a>
                             </div>
                         </div>
                         <img src="{{asset('assets/images/left-banner-image.jpg')}}" alt="">
@@ -25,18 +25,18 @@
                                 <div class="thumb">
                                     <div class="inner-content">
                                         <h4>{{$category->category_name}}</h4>
-                                        <span>Best Clothes For {{$category->category_name}}</span>
+                                        <span>{{ $category->description }}</span>
                                     </div>
                                     <div class="hover-content">
                                         <div class="inner">
                                             <h4>{{$category->category_name}}</h4>
                                             <p>{{$category->description}}</p>
                                             <div class="main-border-button">
-                                                <a href="#">Discover More</a>
+                                                <a href="{{ route('products') }}">Discover More</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <img src="{{asset('assests/images/'.$category->image)}}">
+                                    <img src="{{ $category->imageUrl() }}" alt="{{ $category->category_name }}">
                                 </div>
                             </div>
                         </div>

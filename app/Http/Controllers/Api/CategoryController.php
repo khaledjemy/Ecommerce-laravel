@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $Category = Category::get();
+        $Category = Category::where('published', true)->get();
 
         if(!$Category)
         {
@@ -58,7 +58,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::where('published', true)->findOrFail($id);
         return response()->json($category);
     }
 

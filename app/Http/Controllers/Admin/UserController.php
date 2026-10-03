@@ -80,7 +80,11 @@ class UserController extends Controller
             'active' => 'boolean',
         ]);
     
-            $data['password'] = Hash::make($request['password']);
+            if (filled($data['password'] ?? null)) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                unset($data['password']);
+            }
             User::where('id',$id)->update($data);
             return redirect()->route('user.index'); 
     }

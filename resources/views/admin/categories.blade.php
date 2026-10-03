@@ -66,7 +66,7 @@
                             <a href="{{route('category.edit',$category->id)}}"><img src="{{asset('assessts/admin/images/edit.png')}}" alt="Edit" >
                             </a>
                           </td>
-                          <td><a href="{{route('category.destroy',$category->id)}}" onclick="return confirm('are you sure you want to delete?')"><img src="{{asset('assessts/admin/images/delete.png')}}" alt="Delete" href=""></a>
+                          <td><form method="POST" action="{{ route('category.destroy', $category->id) }}" onsubmit="return confirm('Delete this category?')">@csrf @method('DELETE')<button type="submit" class="btn btn-link"><img src="{{ asset('assessts/admin/images/delete.png') }}" alt="Delete"></button></form>
                           </td>
                         </tr>
                         
@@ -84,4 +84,3 @@
         </div>
         <!-- /page content -->
  @endsection
-       

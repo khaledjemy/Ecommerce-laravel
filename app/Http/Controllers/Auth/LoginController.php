@@ -48,13 +48,16 @@ class LoginController extends Controller
     
     public function authenticated(Request $request, $user)
     {
-        if ($user->email_verified_at!=null && $user->active == 1) 
-        {
-            return redirect()->route('user.index');
+        if (!$user->active) {
+            auth()->logout();
+            return redirect()->route('login')->withErrors(['username' => 'This account is inactive.']);
         }
-    
-        auth()->Auth::logout();
-        return redirect()->route('index');
+
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
+        return $user->is_admin ? redirect()->route('user.index') : redirect()->route('index');
     }
 
 

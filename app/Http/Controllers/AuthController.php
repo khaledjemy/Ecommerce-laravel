@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\Json\ResourceResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -20,6 +21,8 @@ class AuthController extends Controller
         ]);
     
         $user = User::create($data);
+        $user->forceFill(['active' => '1'])->save();
+        event(new Registered($user));
         return response()->json([
             'user' => $user,
         ]);
@@ -33,11 +36,9 @@ class AuthController extends Controller
     ]);
    
     $user = User::where('email',$data['email'])->first();
-    if(!$user || !Hash::check($data['password'],$user->password))
+    if (!$user || !Hash::check($data['password'], $user->password) || !$user->active || !$user->hasVerifiedEmail())
     {
-        return response([
-          'msg'=>'invaid',
-        ]);
+        return response()->json(['message' => 'Invalid or inactive account.'], 401);
     }
     $token = $user->createToken('auth_token')->plainTextToken;
     

@@ -38,6 +38,7 @@ class ProductController extends Controller
             'name'=>'required|string',
             'price'=>'required|numeric',
             'rate'=>'required|numeric',
+            'stock'=>'required|integer|min:0',
             'published'=>'boolean',
             'category_id'=>'required|integer|exists:categories,id',
             'image' =>'required|mimes:png,jpg,jpeg|max:2048',
@@ -77,6 +78,7 @@ class ProductController extends Controller
             'name'=>'sometimes|string',
             'price'=>'sometimes|numeric',
             'rate'=>'sometimes|numeric',
+            'stock'=>'sometimes|integer|min:0',
             'published'=>'boolean',
             'category_id'=>'sometimes|integer|exists:categories,id',
             'image' =>'sometimes|mimes:png,jpg,jpeg|max:2048',
@@ -94,8 +96,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request,string $id)
     {
-        $id = $request->id;
-       Product::where('id',$id)->delete();
+       Product::findOrFail($id)->delete();
        return redirect()->route('product.index');
     }
 }

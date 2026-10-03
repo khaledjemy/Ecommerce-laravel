@@ -1,66 +1,47 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ecommerce Store (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A configurable storefront and order-management starter. It is intended to be installed separately for each buyer. The buyer's name, content, currency, delivery methods and offline payment methods are configured per installation.
 
-## About Laravel
+## Requirements and local setup
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.2+, Composer, a supported database, and mail delivery for email verification and order notifications.
+- Copy `.env.example` to `.env`, configure `APP_URL`, database and mail settings, then run:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+In production, configure `MAIL_*`, `QUEUE_CONNECTION` and run a supervised queue worker (`php artisan queue:work`). Order emails are queued after the order is committed. A failed queue submission is logged and does not erase an already saved order; monitor the logs and failed jobs.
 
-## Learning Laravel
+Use `APP_DEBUG=false` in production. Configure the web server document root to Laravel's `public/` directory; do not expose `.env` or the project root.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Register the first account, verify its email, then grant store-admin access from the server:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+php artisan store:grant-admin admin@example.com
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This command only grants access to an existing verified account. Do not expose it as a public web route. Admin pages are linked from the dashboard after login.
 
-## Laravel Sponsors
+## Store configuration
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+In **Store settings**, set the store name, about text, optional public contact email and ISO currency code. Enable delivery (shipping and/or pickup) and payment (cash on delivery and/or bank transfer). Bank transfer is only offered after instructions are entered. Shipping fees are not calculated automatically: the customer is told they will be confirmed before fulfillment.
 
-### Premium Partners
+Catalog products and categories must be published to be visible. Set stock explicitly for each product; existing products receive stock `0` during migration and cannot be ordered until replenished. The customer can search and filter the catalog, add products to a private cart and place an order after verifying their email. Checkout rechecks stock and reduces it atomically in a database transaction. Orders are created as **unpaid**. Admins can review orders, update fulfillment and manually record payment after checking a real receipt. Cancelling an unpaid order restores stock once and cannot be reopened; paid orders must be resolved before cancellation. Order changes are logged. Customer messages and subscriptions appear in the admin inbox.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Optional sample data for an empty development database:
 
-## Contributing
+```bash
+php artisan db:seed --class=DemoCatalogSeeder
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The sample catalog is synthetic. Do not run the seeder against a buyer's live catalog without reviewing its contents first.
 
-## Code of Conduct
+## Not connected yet
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Card payments, wallets, automatic bank-transfer verification, shipping carriers, tax calculation, shipping rates and refunds are **not** integrated. Order placed/updated emails are queued but require working mail and queue infrastructure. The stock value is decremented at order placement, not reserved temporarily in the cart. Country-specific integrations must be implemented for the buyer's provider and business rules. Do not enable a payment method in the UI without a working server-side integration and verified webhook/callback. The public-facing template still needs buyer-specific branding and legal pages before production use.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Run the automated checks with `php artisan test`.

@@ -19,7 +19,8 @@ class ProductController extends Controller
 
     public function index()
     {  
-        $product = Product::get();
+        $product = Product::where('published', true)
+            ->whereHas('category', fn ($query) => $query->where('published', true))->get();
 
         if(!$product)
         {
@@ -59,7 +60,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::find($id);
+        $product = Product::where('published', true)
+            ->whereHas('category', fn ($query) => $query->where('published', true))->find($id);
         if(!$product)
         {
             return $this->Error('invalid');

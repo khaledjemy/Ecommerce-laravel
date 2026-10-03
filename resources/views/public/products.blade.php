@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                     <div class="inner-content">
                         <h2>Check Our Products</h2>
-                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+                        <span>Browse our available products.</span>
                     </div>
                 </div>
             </div>

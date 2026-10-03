@@ -85,6 +85,7 @@
 													<div class="alert alert-warning">{{ $message }}</div>
 												@enderror
 										</div>
+										<div class="item form-group"><label class="col-form-label col-md-3 col-sm-3 label-align" for="stock">Stock *</label><div class="col-md-6 col-sm-6"><input type="number" id="stock" class="form-control" name="stock" min="0" value="{{ old('stock', 0) }}" required>@error('stock')<div class="alert alert-warning">{{ $message }}</div>@enderror</div></div>
 
 										<div class="item form-group">
 											

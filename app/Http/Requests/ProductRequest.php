@@ -24,6 +24,7 @@ class ProductRequest extends FormRequest
         return [
             'name'=>'required|string',
             'price'=>'required|numeric',
+            'stock'=>'required|integer|min:0',
             'rate'=>'required|decimal:1',
             'published'=>'boolean',
             'category_id'=>'required|integer|exists:categories,id',

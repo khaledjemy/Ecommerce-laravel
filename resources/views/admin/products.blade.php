@@ -54,6 +54,7 @@
                           <th>product Name</th>
                           <th>category name</th>
                           <th>published</th>
+                          <th>stock</th>
                           <th>image</th>
                           <th>Edit</th>
                           <th>Delete</th>
@@ -67,9 +68,10 @@
                           <td>{{$product->name}}</td>
                           <td>{{$product->category->category_name}}</td>
                           <td>{{($product['published']==1) ?'YES':'NO'}}</td>
-                          <td><img src="{{asset('assests/images/'.$product->image)}}" style="max-width: 80px"></td>
+                          <td>{{ $product->stock }}</td>
+                          <td><img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" style="max-width: 80px"></td>
                           <td><a href="{{route('product.edit',$product->id)}}"><img src="{{asset('assessts/admin/images/edit.png')}}" alt="Edit"></a></td>
-                          <td><a href="{{route('product.destroy',$product->id)}}" onclick="return confirm('delete or not')"><img src="{{asset('assessts/admin/images/delete.png')}}" alt="Delete"></a></td>
+                          <td><form method="POST" action="{{ route('product.destroy', $product->id) }}" onsubmit="return confirm('Delete this product?')">@csrf @method('DELETE')<button type="submit" class="btn btn-link"><img src="{{ asset('assessts/admin/images/delete.png') }}" alt="Delete"></button></form></td>
                         </tr>
                         @endforeach 
                         
@@ -86,4 +88,3 @@
         </div>
         <!-- /page content -->
  @endsection
-       
